@@ -117,16 +117,24 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"model.js":[function(require,module,exports) {
+})({"assets/image.png":[function(require,module,exports) {
+module.exports = "/image.90ac9039.png";
+},{}],"model.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.model = void 0;
+var _image = _interopRequireDefault(require("./assets/image.png"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var model = [{
   type: 'title',
-  value: 'Hello World from JS!'
+  value: 'Pure JavaScript website builder',
+  options: {
+    tag: 'h2',
+    styles: "background: linear-gradient(to right, #fdd734, #7a5f3c); color: #fff;"
+  }
 }, {
   type: 'text',
   value: 'here we go with some text'
@@ -135,9 +143,24 @@ var model = [{
   value: ['111111111', '222222222', '333333333']
 }, {
   type: 'image',
-  value: './assets/image.png'
+  value: _image.default
 }];
 exports.model = model;
+},{"./assets/image.png":"assets/image.png"}],"utils.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.col = col;
+exports.row = row;
+function row(content) {
+  var styles = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  return "<div class='row' style=\"".concat(styles, "\">").concat(content, "</div>");
+}
+function col(content) {
+  return "<div class='col-sm'>".concat(content, "</div>");
+}
 },{}],"templates.js":[function(require,module,exports) {
 "use strict";
 
@@ -145,20 +168,22 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.templates = void 0;
+var _utils = require("./utils");
 function title(block) {
-  return row(col("<h1>".concat(block.value, "</h1>")));
+  var _block$options$tag;
+  var tag = (_block$options$tag = block.options.tag) !== null && _block$options$tag !== void 0 ? _block$options$tag : 'h1';
+  var styles = block.options.styles;
+  return (0, _utils.row)((0, _utils.col)("<".concat(tag, ">").concat(block.value, "</").concat(tag, ">")), styles);
 }
 function text(block) {
-  return row(col("<p>".concat(block.value, "</p>")));
+  return (0, _utils.row)((0, _utils.col)("<p>".concat(block.value, "</p>")));
 }
 function columns(block) {
-  var html = block.value.map(function (item) {
-    return col(item);
-  });
-  return row(html.join(''));
+  var html = block.value.map(_utils.col).join('');
+  return (0, _utils.row)(html);
 }
 function image(block) {
-  return row("<img src=\"".concat(block.value, "\" />"));
+  return (0, _utils.row)("<img src=\"".concat(block.value, "\" />"));
 }
 var templates = {
   title: title,
@@ -167,7 +192,7 @@ var templates = {
   columns: columns
 };
 exports.templates = templates;
-},{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./utils":"utils.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -222,27 +247,12 @@ module.exports = reloadCSS;
 var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"utils.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.col = col;
-exports.row = row;
-function row(content) {
-  return "<div class='row'>".concat(content, "</div>");
-}
-function col(content) {
-  return "<div class='col-sm'>".concat(content, "</div>");
-}
-},{}],"index.js":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _model = require("./model");
 var _templates = require("./templates");
 require("./styles/main.css");
-var _utils = require("./utils");
 var site = document.querySelector('#site');
 _model.model.forEach(function (block) {
   // let html = '';
@@ -262,7 +272,7 @@ _model.model.forEach(function (block) {
     site.insertAdjacentHTML('beforeend', toHTML(block));
   }
 });
-},{"./model":"model.js","./templates":"templates.js","./styles/main.css":"styles/main.css","./utils":"utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./model":"model.js","./templates":"templates.js","./styles/main.css":"styles/main.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -287,7 +297,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64318" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55117" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

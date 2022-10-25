@@ -1,7 +1,6 @@
 import {model} from './model';
 import {templates} from './templates';
 import './styles/main.css';
-import {row, col} from './utils'
 
 const site = document.querySelector('#site');
 
